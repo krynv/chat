@@ -24,6 +24,7 @@ export const FileUpload = ({
           alt="Uploaded image"
           className="rounded-full"
         />
+        {/* TODO: Add a way to remove the image from uploadthing's servers if user changes their mind*/}
         <button
           onClick={() => onChange("")}
           className="bg-rose-500 text-white p-1 rounded-full absolute top-0 right-0 shadow-sm"
