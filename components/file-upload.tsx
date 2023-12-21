@@ -1,6 +1,5 @@
 "use client";
 
-
 import { UploadDropzone } from "@/lib/uploadthing";
 
 interface FileUploadProps {
@@ -16,7 +15,7 @@ export const FileUpload = ({
     <UploadDropzone
       endpoint={endpoint}
       onClientUploadComplete={(res) => {
-        onChange(res?.[0].fileUrl);
+        onChange(res?.[0].url);
       }}
       onUploadError={(error: Error) => {
         console.error(error);
