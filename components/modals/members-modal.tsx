@@ -1,6 +1,9 @@
 "use client";
 
+import qs from "query-string"
 import { useState } from "react";
+import { MemberRole } from "@prisma/client";
+
 import {
   Check,
   Gavel,
@@ -32,20 +35,31 @@ import {
   DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu";
 
-
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
 
+const roleIconMap = {
+  "GUEST": null,
+  "MODERATOR": <ShieldCheck className="w-4 h-4 text-indigo-500" />,
+  "ADMIN": <ShieldAlert className="w-4 h-4 text-rose-500" />,
+};
+
 export const MembersModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
-  const [loadingId, setLoadingId] = useState(null);
+  const [loadingId, setLoadingId] = useState("");
+
   const isModalOpen = isOpen && type === "members";
-  const [isLoading, setIsLoading] = useState(false);
   const { server } = data as { server: ServerWithMembersWithProfiles };
-  const roleIconMap = {
-    "GUEST": null,
-    "MODERATOR": <ShieldCheck className="w-4 h-4 text-indigo-500" />,
-    "ADMIN": <ShieldAlert className="w-4 h-4 text-rose-500" />,
+
+  const onRoleChange = async (memberId: string, role: MemberRole) => {
+    try {
+      setLoadingId(memberId);
+    } catch (error) {
+      console.error(error);
+
+    } finally {
+      setLoadingId("");
+    }
   };
 
   return (
