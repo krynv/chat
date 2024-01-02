@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import {
+  Check,
   MoreVertical,
+  Shield,
   ShieldAlert,
   ShieldCheck,
   ShieldQuestion
@@ -81,6 +83,17 @@ export const MembersModal = () => {
                             <ShieldQuestion className="w-4 h-4 mr-2" />
                             <span>Role</span>
                           </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem>
+                                <Shield className="w-4 h-4 mr-2" />
+                                Guest
+                                {member.role === "GUEST" && (
+                                  <Check className="ml-auto h-4 w-4" />
+                                )}
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuPortal>
                         </DropdownMenuSub>
                       </DropdownMenuContent>
                     </DropdownMenu>
