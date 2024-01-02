@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   Check,
   Gavel,
+  Loader2,
   MoreVertical,
   Shield,
   ShieldAlert,
@@ -113,6 +114,9 @@ export const MembersModal = () => {
                   </div>
                 )
               }
+              {loadingId === member.id && (
+                <Loader2 className="animate-spin text-zinc-500 ml-auto w-4 h-4" />
+              )}
             </div>
           ))}
         </ScrollArea>
