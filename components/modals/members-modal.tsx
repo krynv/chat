@@ -79,6 +79,27 @@ export const MembersModal = () => {
     }
   };
 
+  const onRemove = async (memberId: string) => {
+    try {
+      setLoadingId(memberId);
+      const url = qs.stringifyUrl({
+        url: `/api/members/${memberId}`,
+        query: {
+          serverId: server?.id,
+        },
+      });
+
+      const response = await axios.delete(url);
+
+      router.refresh();
+      onOpen("members", { server: response.data });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingId("");
+    }
+  };
+
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black overflow-hidden">
@@ -136,7 +157,7 @@ export const MembersModal = () => {
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onRemove(member.id)}>
                           <Gavel className="h-4 w-4 mr-2 text-rose-500" />
                           <span className="text-rose-500">Remove</span>
                         </DropdownMenuItem>
