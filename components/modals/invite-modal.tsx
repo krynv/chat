@@ -29,6 +29,8 @@ export const InviteModal = () => {
 
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
 
+  const [newInviteUrl, setNewInviteUrl] = useState("");
+
   const onCopy = () => {
     navigator.clipboard.writeText(inviteUrl);
     setCopied(true);
@@ -43,8 +45,11 @@ export const InviteModal = () => {
       setIsLoading(true);
 
       const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+      const { data } = response;
 
-      onOpen("invite", { server: response.data });
+      onOpen("invite", { server: data });
+
+      setNewInviteUrl(`${origin}/invite/${data.inviteCode}`);
 
     } catch (error) {
       console.error(error);
@@ -65,7 +70,7 @@ export const InviteModal = () => {
           <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
             Server invite link
             <div className="flex items-center mt-2 gap-x-2">
-              <Input readOnly disabled={isLoading} className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0" value={inviteUrl} />
+              <Input readOnly disabled={isLoading} className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0" value={newInviteUrl ? newInviteUrl : inviteUrl} />
               <Button disabled={isLoading} onClick={onCopy} size="icon">
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               </Button>
