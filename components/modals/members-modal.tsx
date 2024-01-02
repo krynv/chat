@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   Check,
+  Gavel,
   MoreVertical,
   Shield,
   ShieldAlert,
@@ -102,6 +103,11 @@ export const MembersModal = () => {
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <Gavel className="h-4 w-4 mr-2 text-rose-500" />
+                          <span className="text-rose-500">Remove</span>
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
