@@ -17,8 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useOrigin } from "@/hooks/use-origin";
 
-
-
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const origin = useOrigin();
@@ -53,7 +51,7 @@ export const InviteModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -67,7 +65,7 @@ export const InviteModal = () => {
           <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
             Server invite link
             <div className="flex items-center mt-2 gap-x-2">
-              <Input disabled={isLoading} className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0" value={inviteUrl} />
+              <Input readOnly disabled={isLoading} className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0" value={inviteUrl} />
               <Button disabled={isLoading} onClick={onCopy} size="icon">
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               </Button>
