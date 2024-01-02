@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import { randomUUID } from "crypto";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         profileId: profile.id,
         name,
         imageUrl,
-        inviteCode: crypto.randomUUID(),
+        inviteCode: randomUUID(),
         channels: {
           create: [
             {
