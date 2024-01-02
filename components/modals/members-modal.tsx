@@ -13,20 +13,23 @@ import { UserAvatar } from "@/components/user-avatar";
 
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
+import { ShieldCheck } from "lucide-react";
 
 
 export const MembersModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
-
   const isModalOpen = isOpen && type === "members";
-
   const [isLoading, setIsLoading] = useState(false);
-
   const { server } = data as { server: ServerWithMembersWithProfiles };
+  const roleIconMap = {
+    "GUEST": null,
+    "MODERATOR": <ShieldCheck className="w-4 h-4 text-indigo-500" />,
+    "ADMIN": <ShieldCheck className="w-4 h-4 text-rose-500" />,
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+      <DialogContent className="bg-white text-black overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Manage Members
@@ -39,13 +42,19 @@ export const MembersModal = () => {
           {server?.members?.map((member) => (
             <div key={member.id} className="flex items-center gap-x-2 mb-6">
               <UserAvatar src={member.profile.imageUrl} />
+              <div className="flex flex-col gap-y-1">
+                <div className="text-sm font-semibold flex items-center gap-x-1">
+                  {member.profile.name}
+                  {roleIconMap[member.role]}
+                </div>
+                <p className="text-xs text-zinc-500">
+                  {member.profile.email}
+                </p>
+              </div>
             </div>
           ))}
         </ScrollArea>
-
-
       </DialogContent>
     </Dialog>
   );
 }
-
