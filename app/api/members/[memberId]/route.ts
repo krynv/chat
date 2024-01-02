@@ -14,7 +14,6 @@ export async function PATCH(
     }
 
     const { searchParams } = new URL(req.url);
-    const { role } = await req.json();
     const serverId = searchParams.get("serverId");
 
     if (!serverId) {
@@ -24,6 +23,8 @@ export async function PATCH(
     if (!params.memberId) {
       return new NextResponse("Member ID missing", { status: 400 });
     }
+
+    const { role } = await req.json();
 
     const server = await db.server.update({
       where: {
@@ -60,7 +61,7 @@ export async function PATCH(
     return NextResponse.json(server);
 
   } catch (error) {
-    console.error("[MEMBERS_ID_PATCH]: ", error);
+    console.error("[MEMBERS_ID_PATCH]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
