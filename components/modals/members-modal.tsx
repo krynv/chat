@@ -92,6 +92,13 @@ export const MembersModal = () => {
                                   <Check className="ml-auto h-4 w-4" />
                                 )}
                               </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <ShieldCheck className="w-4 h-4 mr-2" />
+                                Moderator
+                                {member.role === "MODERATOR" && (
+                                  <Check className="ml-auto h-4 w-4" />
+                                )}
+                              </DropdownMenuItem>
                             </DropdownMenuSubContent>
                           </DropdownMenuPortal>
                         </DropdownMenuSub>
