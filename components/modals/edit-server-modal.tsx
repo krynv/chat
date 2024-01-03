@@ -88,10 +88,10 @@ export const EditServerModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create your server
+            {server?.name}
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Give your server some personality. Add a name, an image - you can always change this later
+            Feel free to change the server name and/ or image
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
