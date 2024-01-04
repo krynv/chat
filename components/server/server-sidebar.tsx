@@ -16,6 +16,7 @@ import {
 import { ServerHeader } from "@/components/server/server-header";
 import { ServerSearch } from "@/components/server/server-search";
 import { ServerSection } from "@/components/server/server-section";
+import { ServerChannel } from "@/components/server/server-channel";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -139,6 +140,9 @@ export const ServerSidebar = async ({
               channelType={ChannelType.TEXT}
               server={server}
             />
+            {textChannels.map((channel) => (
+              <ServerChannel />
+            ))}
           </div>
         )}
 
