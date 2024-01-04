@@ -1,4 +1,9 @@
 import { redirect } from "next/navigation";
+
+import { ChannelType, MemberRole } from "@prisma/client";
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+
 import {
   Hash,
   Mic,
@@ -7,14 +12,13 @@ import {
   Video
 } from "lucide-react";
 
-import { ChannelType, MemberRole } from "@prisma/client";
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 
 import { ServerHeader } from "@/components/server/server-header";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { ServerSearch } from "@/components/server/server-search";
+import { ServerSection } from "@/components/server/server-section";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -124,6 +128,13 @@ export const ServerSidebar = async ({
             }
           ]} />
         </div>
+        <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2" />
+
+        {!!textChannels?.length && (
+          <div className="mb-2">
+            <ServerSection />
+          </div>
+        )}
       </ScrollArea>
     </div>
   );
