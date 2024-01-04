@@ -132,9 +132,16 @@ export const ServerSidebar = async ({
 
         {!!textChannels?.length && (
           <div className="mb-2">
-            <ServerSection />
+            <ServerSection
+              label="Text Channels"
+              role={role}
+              sectionType="channels"
+              channelType={ChannelType.TEXT}
+              server={server}
+            />
           </div>
         )}
+
       </ScrollArea>
     </div>
   );
