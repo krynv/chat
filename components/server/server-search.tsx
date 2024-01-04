@@ -44,7 +44,7 @@ export const ServerSearch = ({
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search all schannels and members" />
+        <CommandInput placeholder="Search all channels and members" />
         <CommandList>
           <CommandEmpty>
             No results found
