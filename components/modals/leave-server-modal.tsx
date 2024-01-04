@@ -64,7 +64,7 @@ export const LeaveServerModal = () => {
               onClick={onClick}
               variant="primary"
             >
-              Leave Server
+              {isLoading ? "Leaving..." : "Leave Server"}
             </Button>
           </div>
         </DialogFooter>
