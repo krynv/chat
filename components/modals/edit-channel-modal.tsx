@@ -49,24 +49,23 @@ export const EditChannelModal = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { channel, channelType } = data;
+  const { channel, server } = data;
   const isModalOpen = isOpen && type === "editChannel";
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: channelType || ChannelType.TEXT,
+      type: channel?.type || ChannelType.TEXT,
     },
   });
 
   useEffect(() => {
-    if (channelType) {
-      form.setValue("type", channelType);
-    } else {
-      form.setValue("type", ChannelType.TEXT);
+    if (channel) {
+      form.setValue("name", channel.name);
+      form.setValue("type", channel.type);
     }
-  }, [channelType, form]);
+  }, [channel, form]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -137,7 +136,7 @@ export const EditChannelModal = () => {
                     <Select
                       disabled={isLoading}
                       onValueChange={field.onChange}
-                      defaultValue={channelType || field.value}
+                      defaultValue={channel?.type || field.value}
                     >
                       <FormControl>
                         <SelectTrigger
