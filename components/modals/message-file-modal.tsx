@@ -1,5 +1,6 @@
 "use client";
 
+import qs from "query-string";
 import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,14 +24,13 @@ import {
   FormItem,
   FormMessage
 } from "@/components/ui/form";
-
 import { Button } from "@/components/ui/button";
 
 import { FileUpload } from "@/components/file-upload";
 
 const formSchema = z.object({
-  imageUrl: z.string().min(1, {
-    message: "Please upload an image"
+  fileUrl: z.string().min(1, {
+    message: "Please upload an attachment"
   }),
 });
 
@@ -40,10 +40,12 @@ export const MessageFileModal = () => {
 
   const isModalOpen = isOpen && type === "messageFile";
 
+  const { query, apiUrl } = data;
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      imageUrl: "",
+      fileUrl: "",
     },
   });
 
@@ -51,10 +53,19 @@ export const MessageFileModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/servers", values);
+      const url = qs.stringifyUrl({
+        url: apiUrl || "",
+        query
+      });
+
+      await axios.post(url, {
+        ...values,
+        content: values.fileUrl
+      });
+
       form.reset();
       router.refresh();
-      window.location.reload();
+      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +93,7 @@ export const MessageFileModal = () => {
               <div className="flex items-center justify-center text-center">
                 <FormField
                   control={form.control}
-                  name="imageUrl"
+                  name="fileUrl"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
