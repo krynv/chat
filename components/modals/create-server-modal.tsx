@@ -130,9 +130,18 @@ export const CreateServerModal = () => {
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button variant="primary" disabled={isLoading}>
-                Create Server
-              </Button>
+              <div className="flex items-center justify-between w-full">
+                <Button
+                  disabled={isLoading}
+                  onClick={handleClose}
+                  variant="ghost"
+                >
+                  Cancel
+                </Button>
+                <Button variant="primary" disabled={isLoading}>
+                  Create Server
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </Form>
