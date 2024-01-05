@@ -59,6 +59,9 @@ model Member {
 
   messages Message[]
 
+  conversationsInitiated Conversation[] @relation("MemberOne")
+  conversationsReceived  Conversation[] @relation("MemberTwo")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -111,4 +114,17 @@ model Message {
 
   @@index([memberId])
   @@index([channelId])
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  memberOneId String
+  memberOne   Member @relation("MemberOne", fields: [memberOneId], references: [id], onDelete: Cascade)
+
+  memberTwoId String
+  memberTwo   Member @relation("MemberTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  @@unique([memberOneId, memberTwoId])
+  @@index([memberTwoId])
 }
