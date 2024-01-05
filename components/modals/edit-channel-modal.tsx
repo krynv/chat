@@ -89,7 +89,6 @@ export const EditChannelModal = () => {
   };
 
   const handleClose = () => {
-    form.reset();
     onClose();
   };
 
@@ -164,6 +163,7 @@ export const EditChannelModal = () => {
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <div className="flex items-center justify-between w-full">
                 <Button
+                  type="button"
                   disabled={isLoading}
                   onClick={handleClose}
                   variant="ghost"
