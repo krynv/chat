@@ -65,7 +65,7 @@ export const MessageFileModal = () => {
 
       form.reset();
       router.refresh();
-      onClose();
+      handleClose();
     } catch (error) {
       console.error(error);
     }
