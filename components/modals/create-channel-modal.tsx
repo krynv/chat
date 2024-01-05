@@ -1,11 +1,14 @@
 "use client";
 
 import qs from "query-string";
-
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
+import { ChannelType } from "@prisma/client";
+import { useModal } from "@/hooks/use-modal-store";
 
 import {
   Dialog,
@@ -14,7 +17,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import {
   Form,
   FormControl,
@@ -23,7 +25,6 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-
 import {
   Select,
   SelectContent,
@@ -31,14 +32,8 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-import { useParams, useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
-import { ChannelType } from "@prisma/client";
-import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -68,8 +63,7 @@ export const CreateChannelModal = () => {
   useEffect(() => {
     if (channelType) {
       form.setValue("type", channelType);
-    }
-    else {
+    } else {
       form.setValue("type", ChannelType.TEXT);
     }
   }, [channelType, form]);
