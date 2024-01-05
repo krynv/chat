@@ -3,6 +3,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ChannelType } from "@prisma/client";
+
+import { Hash, Mic, Video } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -14,19 +17,25 @@ import {
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "@/components/ui/button";
 
+const iconMap = {
+  [ChannelType.TEXT]: <Hash className="h-4 w-4" />,
+  [ChannelType.AUDIO]: <Mic className="h-4 w-4" />,
+  [ChannelType.VIDEO]: <Video className="h-4 w-4" />
+};
+
 export const DeleteChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "deleteChannel";
 
-  const { server } = data;
+  const { server, channel } = data;
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/servers/${server?.id}`);
+      await axios.delete(`/api/servers/${server?.id}/channels/${channel?.id}`);
 
       onClose();
       router.push("/");
@@ -45,9 +54,12 @@ export const DeleteChannelModal = () => {
           <DialogTitle className="text-2xl text-center font-bold">
             Delete Channel
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-500">
+          <DialogDescription className="flex flex-col text-zinc-500 items-center gap-y-5">
             Are you sure you want to do this?<br />
-            <span className="font-semibold text-indigo-500">{server?.name}</span> will be permanently deleted.
+            <span className="flex gap-x-1">
+              <span className="flex items-center gap-x-1 font-semibold text-indigo-500">{channel?.type && iconMap[channel.type]} {channel?.name}</span>
+              will be permanently deleted.
+            </span>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-gray-100 px-6 py-4">
@@ -65,7 +77,7 @@ export const DeleteChannelModal = () => {
               onClick={onClick}
               variant="primary"
             >
-              {isLoading ? "Deleting..." : "Delete Server"}
+              {isLoading ? "Deleting..." : "Delete Channel"}
             </Button>
           </div>
         </DialogFooter>
