@@ -49,10 +49,11 @@ const formSchema = z.object({
 });
 
 export const CreateChannelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
 
+  const { channelType } = data;
   const isModalOpen = isOpen && type === "createChannel";
 
   const form = useForm({
@@ -88,7 +89,7 @@ export const CreateChannelModal = () => {
   const handleClose = () => {
     form.reset();
     onClose();
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -132,7 +133,7 @@ export const CreateChannelModal = () => {
                     <Select
                       disabled={isLoading}
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={channelType || field.value}
                     >
                       <FormControl>
                         <SelectTrigger
