@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChannelType } from "@prisma/client";
+import qs from "query-string";
 
 import { Hash, Mic, Video } from "lucide-react";
 import {
@@ -35,10 +36,18 @@ export const DeleteChannelModal = () => {
   const onClick = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/servers/${server?.id}/channels/${channel?.id}`);
+
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: {
+          serverId: server?.id,
+        },
+      });
+
+      await axios.delete(url);
 
       onClose();
-      router.push("/");
+      router.push(`/servers/${server?.id}`);
       router.refresh();
     } catch (error) {
       console.error(error);
