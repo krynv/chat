@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Member, MemberRole, Profile } from "@prisma/client";
 import { FileIcon, ShieldAlert, ShieldCheck } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 import { UserAvatar } from "@/components/user-avatar";
 import { ActionTooltip } from "@/components/action-tooltip";
@@ -41,6 +44,9 @@ export const ChatItem = ({
   socketUrl,
   socketQuery
 }: ChatItemProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
 
   const fileType = fileUrl?.split(".").pop();
 
@@ -97,6 +103,15 @@ export const ChatItem = ({
                 PDF File
               </a>
             </div>
+          )}
+
+          {!fileUrl && !isEditing && (
+            <p className={cn(
+              "text-sm text-zinc-600 dark:text-zinc-300",
+              deleted && "italic text-zinc-500 dark:tezt-zinc-400 text-sm mt-1"
+            )}>
+              {content}
+            </p>
           )}
         </div>
       </div>
