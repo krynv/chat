@@ -86,7 +86,13 @@ export const ChatItem = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      console.log(values);
+      const url = qs.stringifyUrl({
+        url: `${socketUrl}/${id}`,
+        query: socketQuery
+      });
+
+      await axios.patch(url, values);
+
     } catch (error) {
       console.error(error);
 
