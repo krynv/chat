@@ -111,6 +111,11 @@ export const ChatItem = ({
               deleted && "italic text-zinc-500 dark:tezt-zinc-400 text-sm mt-1"
             )}>
               {content}
+              {isUpdated && !deleted && (
+                <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
+                  (edited)
+                </span>
+              )}
             </p>
           )}
         </div>
