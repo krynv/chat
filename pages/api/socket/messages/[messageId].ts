@@ -119,6 +119,26 @@ export default async function handler(
       });
     }
 
+    if (req.method === "DELETE") {
+      message = await db.message.update({
+        where: {
+          id: messageId as string,
+        },
+        data: {
+          deleted: true,
+          fileUrl: null,
+          content: "This message has been deleted"
+        },
+        include: {
+          member: {
+            include: {
+              profile: true,
+            },
+          },
+        }
+      });
+    }
+
     const updateKey = `chat:${channelId}:messages:update`;
 
     res?.socket?.server?.io?.emit(updateKey, message);
