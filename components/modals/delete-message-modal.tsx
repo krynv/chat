@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ChannelType } from "@prisma/client";
 import qs from "query-string";
 
@@ -26,11 +25,10 @@ const iconMap = {
 
 export const DeleteMessageModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useRouter();
 
   const isModalOpen = isOpen && type === "deleteMessage";
 
-  const { server, channel } = data;
+  const { apiUrl, query } = data;
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
@@ -38,17 +36,13 @@ export const DeleteMessageModal = () => {
       setIsLoading(true);
 
       const url = qs.stringifyUrl({
-        url: `/api/channels/${channel?.id}`,
-        query: {
-          serverId: server?.id,
-        },
+        url: apiUrl || "",
+        query
       });
 
       await axios.delete(url);
 
       onClose();
-      router.push(`/servers/${server?.id}`);
-      router.refresh();
     } catch (error) {
       console.error(error);
     } finally {
@@ -63,12 +57,9 @@ export const DeleteMessageModal = () => {
           <DialogTitle className="text-2xl text-center font-bold">
             Delete Message
           </DialogTitle>
-          <DialogDescription className="flex flex-col text-zinc-500 items-center gap-y-5">
-            Are you sure you want to do this?<br />
-            <span className="flex gap-x-1">
-              <span className="flex items-center gap-x-1 font-semibold text-indigo-500">{channel?.type && iconMap[channel.type]} {channel?.name}</span>
-              will be permanently deleted.
-            </span>
+          <DialogDescription className="text-center text-zinc-500">
+            Are you sure you want to do this? <br />
+            The message will be permanently deleted.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="bg-gray-100 px-6 py-4">
