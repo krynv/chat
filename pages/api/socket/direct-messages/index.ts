@@ -47,13 +47,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
         memberOne: {
           include: {
             profile: true,
-          },
+          }
         },
         memberTwo: {
           include: {
             profile: true,
-          },
-        },
+          }
+        }
       }
     });
 
@@ -78,8 +78,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
         member: {
           include: {
             profile: true,
-          },
-        },
+          }
+        }
       }
     });
 
@@ -87,8 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
 
     res?.socket?.server?.io?.emit(channelKey, message);
 
-    return res.status(200).json({ message });
-
+    return res.status(200).json(message);
   } catch (error) {
     console.error("[DIRECT_MESSAGES_POST]", error);
     return res.status(500).json({ error: "Internal Error" });

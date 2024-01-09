@@ -1,8 +1,8 @@
 import { NextApiRequest } from "next";
+import { MemberRole } from "@prisma/client";
 import { NextApiResponseServerIO } from "@/types";
 import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
-import { MemberRole } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,10 +31,9 @@ export default async function handler(
 
     const { content } = req.body;
 
-
     const conversation = await db.conversation.findFirst({
       where: {
-        id: directMessageId as string,
+        id: conversationId as string,
         OR: [{
           memberOne: {
             profileId: profile.id,
